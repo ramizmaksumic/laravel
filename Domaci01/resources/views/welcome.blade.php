@@ -1,19 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
+    @extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-</head>
+    @section("heading")
 
-<body>
+    <?php $heading = "Home";
+    echo $heading; ?>
+    @endsection
 
+
+    @section("glavnastranica")
 
     <h1>Home</h1>
-    <hr>
-    <p>Ovo je Home stranica</p>
-
-</body>
-
-</html>
+    <p>Trenutno vrijeme je: {{ date("h:i:s") }}</p>
+    @endsection

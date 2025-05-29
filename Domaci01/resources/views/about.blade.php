@@ -1,17 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+  @extends('layout')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About</title>
-</head>
+  @section("heading")
 
-<body>
-    <h1>About Us</h1>
-    <hr>
-    <p>Ovo je About us stranica</p>
+  <?php $heading = "About Us";
+    echo $heading; ?>
+  @endsection
 
-</body>
+  @section("glavnastranica")
 
-</html>
+  <h1>About</h1>
+  <p>Ovo je about stranica</p>
+  @endsection
