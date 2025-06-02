@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -10,15 +11,13 @@ class HomeController extends Controller
 
 
     {
-        $sat = date("H");
+        $products = Product::orderBy('created_at', 'desc')
+            ->take(6)
+            ->get();
 
-        $trenutnoVrijeme = date("h:i:s");
 
-        return view('welcome', [
 
-            'trenutnoVrijeme' => $trenutnoVrijeme,
-            'sat' => $sat
 
-        ]);
+        return view('welcome', ['products' => $products]);
     }
 }

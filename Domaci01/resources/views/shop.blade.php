@@ -10,15 +10,8 @@
 
 
  @foreach ($products as $product )
- @if ($product == "Audi S5")
- <ul class="mt-8">
-    <li><a class="text-blue-600" href="">{{ $product }} - EKSTRA SNIŽENJE</a></li>
- </ul>
- @else
- <ul class="mt-8">
-    <li><a class="text-blue-600" href="">{{ $product }}</a></li>
- </ul>
- @endif
+ <p>{{ $product->name }}</p>
+ <p>{{ $product->description }}</p>
 
  @endforeach
  @endsection

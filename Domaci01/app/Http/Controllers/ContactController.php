@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
@@ -16,5 +17,12 @@ class ContactController extends Controller
         } else {
             echo 'Wrong page! Sorry try again!';
         }
+    }
+
+    public function showContact()
+    {
+        $allcontacts = Contact::all();
+
+        return view('allContacts', ['allcontacts' => $allcontacts]);
     }
 }

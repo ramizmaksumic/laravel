@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -9,7 +10,8 @@ class ShopController extends Controller
     public function index()
     {
 
-        $products = ["Audi S5", "Mercedes G class", "BMW 650i", "Nissan GTR"];
+        $products = Product::all();
+
         return view('shop', ['products' => $products]);
     }
 }
