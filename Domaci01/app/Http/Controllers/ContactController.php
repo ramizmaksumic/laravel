@@ -25,4 +25,21 @@ class ContactController extends Controller
 
         return view('allContacts', ['allcontacts' => $allcontacts]);
     }
+
+    public function sendContact(Request $request)
+    {
+        $request->validate([
+            "email" => "required",
+            "name" => "required",
+            "password" => "required|max:8"
+        ]);
+
+        Contact::create([
+            "email" => $request->get("email"),
+            "name" => $request->get("name"),
+            "password" => $request->get("password")
+        ]);
+
+        return redirect('/');
+    }
 }
