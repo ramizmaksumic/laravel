@@ -42,4 +42,18 @@ class ContactController extends Controller
 
         return redirect('/');
     }
+
+    public function deleteContact($contact)
+    {
+        $singleContact = Contact::where(['id' => $contact])->first();
+
+        if ($singleContact === null) {
+            abort(404, 'Kontakt nije pronađen.');
+        }
+
+        // Ako kontakt postoji, nastavi s brisanjem
+        $singleContact->delete();
+
+        return redirect()->back()->with('success', 'Kontakt je uspješno izbrisan.');
+    }
 }

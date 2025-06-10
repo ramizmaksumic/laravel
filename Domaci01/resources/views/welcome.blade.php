@@ -33,6 +33,7 @@
 <br>
             
 <a href=" /admin/all-products" class="bg-blue-800 p-3 mt-3 text-white font-bold">Vidi sve proizvode</a>
+            <a href=" /admin/all-contacts" class="bg-blue-500 p-3 mt-3 text-white font-bold">Vidi sve kontakte</a>
 
 
             @endsection

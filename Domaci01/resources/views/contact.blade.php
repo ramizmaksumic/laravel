@@ -10,7 +10,8 @@
 
  <h2 class="text-2xl font-bold">Kontakt podaci</h2>
  <p>Za sve informacije možete nas kontaktirati putem ove kontakt forme</p>
- <form action="/" class="mt-4 flex flex-col w-3xl">
+ <form action="/send-contact" method="POST" class="mt-4 flex flex-col w-3xl">
+   @csrf
    <label for="email">Email</label>
    <input type="email" name="email" id="email" class="bg-white">
    <label for="name">Ime i Prezime</label>

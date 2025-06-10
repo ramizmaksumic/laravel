@@ -23,6 +23,7 @@
             <th>Price</th>
             <th>Amount</th>
             <th>Image</th>
+            <th>Action</th>
         </tr>
         @foreach ($products as $product )
         <tr style="border: 1px solid black">
@@ -31,6 +32,7 @@
             <td style="border: 1px solid black">{{ $product->price }}</td>
             <td style="border: 1px solid black">{{ $product->amount }}</td>
             <td style="border: 1px solid black">{{ $product->image }}</td>
+            <td style="border: 1px solid black"><a href="/admin/delete-product/{{ $product->id }}" style="background-color: red; padding: 2px 10px; margin: 5px; color: #fff; border: 1px solid #fff;  ">Delete</a><a href="" style="background-color: blue; padding: 2px 10px; margin: 5px; color: #fff; border: 1px solid #fff;  ">Edit</a></td>
 
         </tr>
 

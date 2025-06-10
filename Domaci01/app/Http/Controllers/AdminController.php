@@ -40,4 +40,18 @@ class AdminController extends Controller
 
         return view('products', ["products" => $products]);
     }
+
+    public function delete($product)
+    {
+
+        $singleProduct = Product::where(['id' => $product])->first();
+
+        if ($singleProduct === null) {
+            die("Ovaj proizvod ne postoji u bazi podataka.");
+        } else {
+            $singleProduct->delete();
+        }
+
+        return redirect()->back();
+    }
 }
