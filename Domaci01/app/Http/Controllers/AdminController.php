@@ -16,7 +16,7 @@ class AdminController extends Controller
     {
 
         $request->validate([
-            "name" => "required|max:255",
+            "name" => "required|max:255|unique:products",
             "description" => "required|max:255",
             "amount" => "required|max:20",
             "price" => "required|max:20"
@@ -53,5 +53,35 @@ class AdminController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    public function singleProduct($product)
+    {
+        $product = Product::findOrFail($product);
+
+        return view('single-product', ['product' => $product]);
+    }
+
+    public function update(Request $request, $id)
+    {
+
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            "name" => "required|max:255|unique:products",
+            "description" => "required|max:255",
+            "amount" => "required|max:20",
+            "price" => "required|max:20"
+        ]);
+
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->amount = $request->amount;
+        $product->price = $request->price;
+        $product->image = $request->image;
+
+        $product->save();
+
+        return redirect('/');
     }
 }

@@ -56,4 +56,33 @@ class ContactController extends Controller
 
         return redirect()->back()->with('success', 'Kontakt je uspješno izbrisan.');
     }
+
+    public function editContact($id)
+    {
+
+
+        $id = Contact::findOrFail($id);
+
+        return view('edit-contact', ['id' => $id]);
+    }
+
+    public function updateContact(Request $request, $contact)
+    {
+
+        $contact = Contact::findOrFail($contact);
+
+        $request->validate([
+            "email" => "required",
+            "name" => "required",
+            "password" => "required"
+        ]);
+
+        $contact->email = $request->email;
+        $contact->name = $request->name;
+        $contact->password = $request->password;
+
+        $contact->save();
+
+        return redirect('admin/all-contacts');
+    }
 }

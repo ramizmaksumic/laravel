@@ -41,7 +41,7 @@
              <td style="border: 1px solid black">{{ $singleContact->id }}</td>
              <td style="border: 1px solid black">
                  <a style="color:red; font-weight: 700;" href=" /admin/delete-contact/{{ $singleContact->id }}">Delete</a>
-                 <a style="color:blue; font-weight: 700;" href="#">Edit</a>
+                 <a style="color:blue; font-weight: 700;" href="/admin/edit-contact/{{ $singleContact->id }}">Edit</a>
              </td>
          </tr>
          @endforeach
