@@ -2,7 +2,7 @@
 
     @section("heading")
 
-    <?php $heading = "Home";
+    <?php $heading = "Dashboard";
     echo $heading; ?>
     @endsection
 
