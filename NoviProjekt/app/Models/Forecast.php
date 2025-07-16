@@ -7,10 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Forecast extends Model
 {
     protected $table = 'forecast';
-    protected $fillable = ['city_id', 'temperature', 'date'];
+    protected $fillable = ['gradovi_id', 'temperature', 'date', 'weathet_type', 'probability'];
+
+    const WEATHER = ["rainy", "snowy", "sunny"];
     public function city()
     {
-
-        return $this->hasOne(City::class, 'id', 'id');
+        return $this->belongsTo(City::class, 'gradovi_id');
     }
 }

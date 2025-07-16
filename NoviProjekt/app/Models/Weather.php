@@ -19,4 +19,11 @@ class Weather extends Model
 
         return $this->hasOne(City::class, 'id', 'id');
     }
+
+    public function index()
+    {
+
+
+        return view('forecast-form');
+    }
 }

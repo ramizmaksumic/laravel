@@ -9,4 +9,10 @@ class City extends Model
 
     protected $table = 'gradovi';
     protected $fillable = ['name'];
+
+    // u City modelu:
+    public function forecasts()
+    {
+        return $this->hasMany(Forecast::class, 'gradovi_id');
+    }
 }

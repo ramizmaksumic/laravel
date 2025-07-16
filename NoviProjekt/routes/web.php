@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CitiesController;
+use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Weather;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -16,6 +19,13 @@ Route::get('add-cities', [CitiesController::class, 'addCitie']);
 Route::post('add-citie', [CitiesController::class, 'createCitie']);
 
 Route::get('/prognoza', [CitiesController::class, 'showCities'])->middleware('auth');
+
+Route::get('/forecast/{city:name}/', [ForecastController::class, 'index']);
+
+Route::get('admin/weather', [Weather::class, 'index']);
+
+Route::get('/admin/forecast', [AdminController::class, 'showForecast']);
+Route::post('/admin/forecast/update', [AdminController::class, 'updateForecast'])->name('update-forecast');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
