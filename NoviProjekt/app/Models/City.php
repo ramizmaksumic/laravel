@@ -13,6 +13,6 @@ class City extends Model
     // u City modelu:
     public function forecasts()
     {
-        return $this->hasMany(Forecast::class, 'gradovi_id');
+        return $this->hasMany(Forecast::class, 'gradovi_id')->orderBy('date', 'desc');
     }
 }

@@ -32,3 +32,10 @@ class AdminController extends Controller
         return redirect()->back();
     }
 }
+
+
+
+
+// <i class="fa-solid fa-cloud-rain"></i>
+// <i class="fa-solid fa-snowflake"></i>
+// <i class="fa-solid fa-sun"></i>
