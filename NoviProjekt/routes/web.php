@@ -11,6 +11,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/search', [ForecastController::class, 'showSearch']);
+Route::post('/search', [ForecastController::class, 'doSearch']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
