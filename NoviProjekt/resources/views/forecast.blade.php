@@ -13,6 +13,9 @@
 
 <body>
     <div class=" p-3 flex flex-col">
+        <div class="flex justify-end">
+            <a class="btn btn-primary" href="/">NAZAD NA HOME</a>
+        </div>
 
         <form class="m-3" action="{{ route('update-forecast') }}" method="POST">
             @csrf

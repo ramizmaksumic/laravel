@@ -6,6 +6,7 @@ use App\Models\Citie;
 use App\Models\City;
 use App\Models\Forecast;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ForecastController extends Controller
 {
@@ -33,7 +34,16 @@ class ForecastController extends Controller
         }
 
 
+        $userCities = [];
 
-        return view('show-cities', compact('cities'));
+        if (Auth::check()) {
+
+            $userCities = Auth::user()->cityFavourites;
+            $userCities = $userCities->pluck('city_id')->toArray();
+        }
+
+
+
+        return view('show-cities', compact('cities', 'userCities'));
     }
 }

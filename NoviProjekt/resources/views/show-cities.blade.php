@@ -36,7 +36,19 @@
 
                 @endphp
 
-                <a class="bg-blue-700 py-2 px-4 rounded-xl text-white flex items-center gap-2" href="">
+                @if (in_array($city->id, $userCities))
+                <a class="bg-blue-700 py-2 px-4 rounded-xl text-yellow-200 flex items-center" href="{{ route('delete.favourites', ['city'=> $city->id]) }}"><i class="fa-solid fa-heart"></i></a>
+
+                @else
+
+                <a class="bg-blue-700 py-2 px-4 rounded-xl text-white flex items-center" href="{{ route('user.favourites', ['city'=> $city->id]) }}"><i class=" fa-regular fa-heart"></i></a>
+
+                @endif
+
+
+
+                <a class="bg-blue-700 py-2 px-4 rounded-xl text-white flex items-center" href="">
+
                     <i class="fa-solid text-yellow-200 {{ $icon }}"></i>
                     {{ $city->name }}
                 </a>
