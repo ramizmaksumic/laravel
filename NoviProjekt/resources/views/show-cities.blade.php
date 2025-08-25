@@ -15,7 +15,7 @@
         <div class="mt-5">
 
             @if (Session::has("error"))
-            {{ Session::get('error') }}
+            {{ Session::get("error") }}
             @else
             <div class="flex md:flex-row flex-wrap gap-4 mt-8">
                 @foreach ($cities as $city)
@@ -49,8 +49,8 @@
 
                 <a class="bg-blue-700 py-2 px-4 rounded-xl text-white flex items-center" href="">
 
-                    <i class="fa-solid text-yellow-200 {{ $icon }}"></i>
-                    {{ $city->name }}
+                    <i class="fa-solid text-yellow-200 {{ $icon }}"> </i><span class="px-3">{{ $city->name }}</span>
+
                 </a>
                 @endforeach
 

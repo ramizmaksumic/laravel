@@ -15,9 +15,10 @@
 
         <div class="mt-5">
 
-            @if (Session::has("error"))
+            @if (Session::has(['error', 'message']))
 
             {{ Session::get('error')}}
+
 
             @else
 

@@ -24,22 +24,23 @@ class GetRealWeather extends Command
     /**
      * Execute the console command.
      */
-    public function handle()
+    public function handle(string $city)
     {
 
 
 
         $apiKey = env('WEATHER_API_KEY');
 
-        $url = "http://api.weatherapi.com/v1/current.json";
+        $url = "http://api.weatherapi.com/v1//forecast.json";
         $response = Http::get($url, [
             "key" => $apiKey,
             "q" => 'Mostar',
+            "days" => 3
 
         ]);
 
         $jsonResponse = $response->json();
 
-        dd($jsonResponse['location']['name'] . ', ' . $jsonResponse['current']['temp_c']);
+        dd($jsonResponse);
     }
 }
