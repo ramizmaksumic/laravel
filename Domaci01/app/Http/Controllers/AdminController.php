@@ -2,33 +2,32 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    private $productRepo;
+
+    public function __construct()
+    {
+        $this->productRepo = new ProductRepository();
+    }
     public function index()
     {
         return view('admin');
     }
 
-    public function addProducts(Request $request)
+    public function addProducts(AddProductRequest $request)
     {
 
-        $request->validate([
-            "name" => "required|max:255|unique:products",
-            "description" => "required|max:255",
-            "amount" => "required|max:20",
-            "price" => "required|max:20"
-        ]);
+        $request->validated();
 
-        Product::create([
-            "name" => $request->get("name"),
-            "description" => $request->get("description"),
-            "amount" => $request->get("amount"),
-            "price" => $request->get("price"),
-            "image" => $request->get("image"),
-        ]);
+        $this->productRepo->createNew($request);
 
         return redirect('/admin/all-products');
     }
@@ -44,7 +43,7 @@ class AdminController extends Controller
     public function delete($product)
     {
 
-        $singleProduct = Product::where(['id' => $product])->first();
+        $singleProduct = $this->productRepo->returnProd($product);
 
         if ($singleProduct === null) {
             die("Ovaj proizvod ne postoji u bazi podataka.");
@@ -62,17 +61,12 @@ class AdminController extends Controller
         return view('single-product', ['product' => $product]);
     }
 
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
 
         $product = Product::findOrFail($id);
 
-        $request->validate([
-            "name" => "required|max:255|unique:products",
-            "description" => "required|max:255",
-            "amount" => "required|max:20",
-            "price" => "required|max:20"
-        ]);
+        $request->validated();
 
         $product->name = $request->name;
         $product->description = $request->description;

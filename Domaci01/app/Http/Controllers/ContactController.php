@@ -2,11 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SendContactRequest;
+use App\Http\Requests\UpdateContactRequest;
 use App\Models\Contact;
+use App\Repositories\ContactRepository;
 use Illuminate\Http\Request;
 
 class ContactController extends Controller
 {
+
+
+    private $contactRepo;
+
+    public function __construct()
+    {
+
+        $this->contactRepo = new ContactRepository();
+    }
 
     protected $uslov = true;
     public function index()
@@ -26,19 +38,11 @@ class ContactController extends Controller
         return view('allContacts', ['allcontacts' => $allcontacts]);
     }
 
-    public function sendContact(Request $request)
+    public function sendContact(SendContactRequest $request)
     {
-        $request->validate([
-            "email" => "required",
-            "name" => "required",
-            "password" => "required|max:8"
-        ]);
+        $request->validated();
 
-        Contact::create([
-            "email" => $request->get("email"),
-            "name" => $request->get("name"),
-            "password" => $request->get("password")
-        ]);
+        $this->contactRepo->sendContact($request);
 
         return redirect('/');
     }
@@ -66,16 +70,12 @@ class ContactController extends Controller
         return view('edit-contact', ['id' => $id]);
     }
 
-    public function updateContact(Request $request, $contact)
+    public function updateContact(UpdateContactRequest $request, $contact)
     {
 
         $contact = Contact::findOrFail($contact);
 
-        $request->validate([
-            "email" => "required",
-            "name" => "required",
-            "password" => "required"
-        ]);
+        $request->validated();
 
         $contact->email = $request->email;
         $contact->name = $request->name;

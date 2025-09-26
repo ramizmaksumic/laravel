@@ -2,8 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Models\ExchangeRates;
+use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use phpDocumentor\Reflection\Types\Null_;
 
 class MoneyExchange extends Command
 {
@@ -29,14 +32,25 @@ class MoneyExchange extends Command
         // Freecurrencyapi.com
         // Bazni kurs je dolar
 
-        $url = "https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_kzZGNlpGBCY2b7mlpHAtvz4wo740l8TnLLXeMqsD&currencies=EUR%2CUSD";
-        $response = Http::get($url);
+        // $url = "https://kurs.resenje.org/api/v1/currencies/usd/rates/today;
 
-        $jsonResponse = $response->json();
+        $currencies = ["USD", "EUR"];
 
-        $dolar = $jsonResponse['data']["USD"];
-        $euro = $jsonResponse['data']["EUR"];
+        foreach ($currencies as $currency) {
+            $response = Http::get("https://kurs.resenje.org/api/v1/currencies/$currency/rates/today");
+            $created_at = ExchangeRates::where('curency', $currency)
+                ->whereDate('created_at', Carbon::now())
+                ->first();
 
-        dd("Za 1\$ dobijate" . $euro . " €, na dan " . date('l jS \of F Y h:i:s A'));
+            if ($created_at !== null) {
+
+                continue;
+            } else {
+                ExchangeRates::create([
+                    'curency' => $currency,
+                    'value' => $response->json()['exchange_middle']
+                ]);
+            }
+        }
     }
 }
