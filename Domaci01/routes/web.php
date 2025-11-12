@@ -14,25 +14,27 @@ Route::get('/about', function () {
 
 Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index']);
 
-Route::get('/contact', [\App\Http\Controllers\ContactController::class, 'index']);
-
-Route::get('/admin/all-contacts', [\App\Http\Controllers\ContactController::class, 'showContact']);
-
-Route::post('/send-contact', [\App\Http\Controllers\ContactController::class, 'sendContact']);
-Route::get("/admin/delete-contact/{contact}", [ContactController::class, 'deleteContact']);
-Route::get('/admin/edit-contact/{id}', [ContactController::class, 'editContact']);
-Route::put('/admin/update-contact/{contact}', [ContactController::class, 'updateContact'])->name('contact.update');
-
-
-Route::get('/admin/add-products', [AdminController::class, 'index'])->middleware('auth');
-Route::post('/admin/add-products', [AdminController::class, 'addProducts']);
-Route::get("admin/delete-product/{product}", [AdminController::class, "delete"]);
-Route::get('admin/single-product/{product}', [AdminController::class, 'singleProduct']);
-Route::put('admin/products/{id}', [AdminController::class, 'update'])->name('products.update');
-
-Route::get('/admin/all-products', [AdminController::class, 'allProducts']);
+Route::controller(ContactController::class)->prefix('contact')->group(function () {
+    Route::get('/contact', 'index');
+    Route::get('/all-contacts', 'showContact');
+    Route::post('/send-contact', 'sendContact');
+    Route::get("/delete-contact/{contact}", 'deleteContact')->name('contact.delete');
+    Route::get('/edit-contact/{id}', 'editContact')->name('contact.edit');
+    Route::put('/update-contact/{contact}', 'updateContact')->name('contact.update');
+});
 
 
+Route::controller(AdminController::class)
+    ->prefix('admin')
+    ->name('products.')
+    ->group(function () {
+        Route::get('/add-products', 'index')->middleware('auth');
+        Route::post('/add-products', 'addProducts')->name('save');
+        Route::get("/delete-product/{product}", "delete")->name('delete');
+        Route::get('/single-product/{product}', 'singleProduct')->name('single');
+        Route::put('/products/{id}', 'update')->name('update');
+        Route::get('/all-products', 'allProducts')->name('all');
+    });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
