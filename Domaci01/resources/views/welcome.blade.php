@@ -19,21 +19,29 @@
 
     @foreach ($products as $product )
 
-    <div class=" p-4 bg-white mb-3 hover:bg-blue-50">
+    <div class=" p-4 bg-white mb-3 hover:bg-slate-200 flex justify-between items-center">
 
-        <p class="font-bold"><a href="">{{ $product->name }} - {{ $product->price }}</a></p>
-        <p ">{{ $product->description }}</p>
+        <div>
+            <p class="font-bold"><a href="">{{ $product->name }} - {{ $product->price }}</a></p>
+            <p ">{{ $product->description }}</p>
+
+        </div>
+
+        <div>
+        <a href=" {{ route('products.single', ['product'=> $product->id]) }}" class=" bg-blue-600 text-white px-4 py-2 rounded-md">Kupi</a>
+        </div>
+
 
     </div>
 
-   
+
 
 
     @endforeach
-<br>
-            
-<a href=" /admin/all-products" class="bg-blue-800 p-3 mt-3 text-white font-bold">Vidi sve proizvode</a>
-            <a href=" /admin/all-contacts" class="bg-blue-500 p-3 mt-3 text-white font-bold">Vidi sve kontakte</a>
+    <br>
+
+    <a href=" /admin/all-products" class="bg-blue-800 p-3 mt-3 text-white font-bold">Vidi sve proizvode</a>
+    <a href=" /admin/all-contacts" class="bg-blue-500 p-3 mt-3 text-white font-bold">Vidi sve kontakte</a>
 
 
-            @endsection
+    @endsection

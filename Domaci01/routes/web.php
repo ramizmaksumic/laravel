@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ShopingCartController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -13,6 +14,8 @@ Route::get('/about', function () {
 });
 
 Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index']);
+
+Route::post('/shop/cart', [ShopingCartController::class, 'addToCart'])->name('shoping.cart');
 
 Route::controller(ContactController::class)->prefix('contact')->group(function () {
     Route::get('/contact', 'index');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
+
 class HomeController extends Controller
 {
     public function index()
@@ -14,6 +15,8 @@ class HomeController extends Controller
         $products = Product::orderBy('created_at', 'desc')
             ->take(6)
             ->get();
+
+
 
 
 
