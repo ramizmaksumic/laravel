@@ -16,6 +16,7 @@ Route::get('/about', function () {
 Route::get('/shop', [\App\Http\Controllers\ShopController::class, 'index']);
 
 Route::post('/shop/cart', [ShopingCartController::class, 'addToCart'])->name('shoping.cart');
+Route::post('/shop/cart/checkout', [ShopingCartController::class, 'cartCheckout'])->name('cart.checkout');
 
 Route::controller(ContactController::class)->prefix('contact')->group(function () {
     Route::get('/contact', 'index');

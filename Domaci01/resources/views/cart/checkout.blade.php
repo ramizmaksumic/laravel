@@ -55,9 +55,15 @@ echo $heading; ?>
 </div>
 
 <div class="mt-6 flex justify-end">
-    <a href="#" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition font-semibold">
-        Nastavi na plaćanje
-    </a>
+    <form action="{{ route('cart.checkout') }}" method="POST">
+        @csrf
+
+        <button
+            type="submit"
+            class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition">
+            Nastavi sa plaćanjem
+        </button>
+    </form>
 </div>
 @else
 <div class="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-lg">
