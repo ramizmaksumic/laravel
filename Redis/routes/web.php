@@ -1,17 +1,15 @@
 <?php
 
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProductController;
+use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::get('/', [HomeController::class, 'index']);
 
-    Cache::add('name', 'Ramiz', 600);
+Route::get('products/', [ProductController::class, 'create'])->name('create-product');
+Route::post('products/create', [ProductController::class, 'store'])->name('products.store');
 
-    $users = User::all();
-
-    Cache::put('all_users', $users);
-
-    dd(Cache::get('all_users'));
-    return view('welcome');
-});
+Route::get('products/flush/', [ProductController::class, 'flush']);
