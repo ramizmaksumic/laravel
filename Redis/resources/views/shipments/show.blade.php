@@ -2,24 +2,24 @@
 
 @section('content')
 <div class="mx-auto max-w-3xl px-4 py-10">
-    <div class="rounded-2xl border border-gray-200 bg-slate-500 p-6 text-slate-50 shadow-sm">
-        <h1 class="text-2xl font-bold text-gray-50">{{ $shipment->title }}</h1>
+    <div class="rounded-2xl border border-gray-200 bg-white-50 p-6 text-slate-50 shadow-sm">
+        <h1 class="text-2xl font-bold text-gray-600">{{ $shipment->title }}</h1>
 
-        <p class="mt-4 text-gray-50">
+        <p class="mt-4 text-gray-600">
             <span class="font-semibold">Ruta:</span>
             {{ $shipment->from_city }}, {{ $shipment->from_country }} →
             {{ $shipment->to_city }}, {{ $shipment->to_country }}
         </p>
 
-        <p class="mt-2 text-gray-50">
+        <p class="mt-2 text-gray-600">
             <span class="font-semibold">Cijena:</span> {{ $shipment->price }} KM
         </p>
 
-        <p class="mt-2 text-gray-50">
+        <p class="mt-2 text-gray-600">
             <span class="font-semibold">Status:</span> {{ $shipment->status }}
         </p>
 
-        <p class="mt-2 text-gray-50">
+        <p class="mt-2 text-gray-600">
             <span class="font-semibold">User:</span> {{ $shipment->user->name ?? 'N/A' }}
         </p>
 

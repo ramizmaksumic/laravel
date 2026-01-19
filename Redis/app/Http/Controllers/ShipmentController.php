@@ -6,6 +6,7 @@ use App\Http\Requests\NewShipmentRequest;
 use App\Models\Shipment;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class ShipmentController extends Controller
 {
@@ -14,9 +15,17 @@ class ShipmentController extends Controller
 
     public function index()
     {
-        return view('shipments.index', [
-            'shipments' => Shipment::where('status',  'pending')->latest()->paginate(6),
-        ]);
+
+        $page = request('page', 1);
+
+        $shipments = Cache::remember("shipments.pending.page.$page", 300, function () {
+            return Shipment::where('status', 'pending')
+                ->latest()
+                ->paginate(6);
+        });
+
+
+        return view('shipments.index', compact('shipments'));
     }
 
     /**
@@ -35,6 +44,8 @@ class ShipmentController extends Controller
     public function store(NewShipmentRequest $request)
     {
         Shipment::create($request->validated());
+
+        Cache::flush();
 
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment created successfully!');
