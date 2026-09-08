@@ -29,8 +29,10 @@ class NewShipmentRequest extends FormRequest
             'to_country'   => ['required', 'string', 'max:100'],
             'price'        => ['required', 'integer', 'min:0'],
             'status'       => ['required', 'in:pending,in_transit,delivered,cancelled'],
-            'user_id'      => ['required', 'exists:users,id'],
+
             'details'      => ['nullable', 'string'],
+            'documents'    => ['required', 'array'],
+            'documents.*' => ['file', 'mimes:pdf,jpg,jpeg,png,doc,docx', 'max:10240'],
         ];
     }
 }

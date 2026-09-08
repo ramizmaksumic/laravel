@@ -5,6 +5,8 @@ namespace App\Models;
 use Exception;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
+use Override;
 
 class Shipment extends Model
 {
@@ -30,6 +32,7 @@ class Shipment extends Model
         'status',
         'user_id',
         'details',
+
     ];
 
     public function setStatusAttribute($status)
@@ -41,8 +44,19 @@ class Shipment extends Model
         $this->attributes['status'] = $status;
     }
 
+    #[Override]
+    public static function booted()
+    {
+        Cache::forget('cancelled');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function documents()
+    {
+        return $this->hasMany(ShipmentDocuments::class, 'shipment_id', 'id');
     }
 }

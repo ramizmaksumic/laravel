@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="mt-20">
-    <form action="{{ route('shipments.store') }}" method="POST" class="mx-auto max-w-3xl space-y-6">
+    <form action="{{ route('shipments.store') }}" enctype="multipart/form-data" method="POST" class="mx-auto max-w-3xl space-y-6">
         @csrf
 
         <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
@@ -145,7 +145,7 @@
                     @enderror
                 </div>
 
-                <div>
+                <!-- <div>
                     <label for="user_id" class="block text-sm font-medium text-gray-700">User</label>
                     <select
                         name="user_id"
@@ -164,7 +164,26 @@
                     @error('user_id')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
-                </div>
+                </div> -->
+            </div>
+
+            {{-- Documents --}}
+            <div class="mt-6">
+                <label for="documents" class="block text-sm font-medium text-gray-700">Documents</label>
+                <input
+                    type="file"
+                    name="documents[]"
+                    id="documents"
+                    value=""
+                    multiple
+                    class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
+                           placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
+                           @error('documents') border-red-500 focus:border-red-500 focus:ring-red-500/20 @enderror"
+                    placeholder="Dodatni dokumenti...">
+
+                @error('details')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                @enderror
             </div>
 
             {{-- Details --}}

@@ -28,6 +28,17 @@
             <p class="font-bold mb-5">Detalji pošiljke</p>
             {{ $shipment->details }}
         </div>
+
+
+        <div class="mt-4 rounded-xl bg-gray-50 p-4 text-gray-700">
+            <p class="font-bold mb-5">Fajlovi</p>
+            @foreach($shipment->documents as $document)
+            <a href="{{  Storage::url('documents/' .$shipment->id . '/' . $document->document_name) }}"
+                class="block mt-2 text-blue-500 hover:underline" target="_blank">
+                {{ $document->document_name }}
+            </a>
+            @endforeach
+        </div>
         @endif
         <div class="mt-2 text-gray-700 mt-5 items-center flex">
             <a href="{{ route('shipments.index') }}" class="mt-4 rounded-xl bg-slate-700 p-3 text-sm text-gray-50 text-center font-medium">Idi nazad</a>
