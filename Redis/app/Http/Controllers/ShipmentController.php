@@ -3,14 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\NewShipmentRequest;
+use App\Http\Requests\UpdateShipmentRequest;
 use App\Models\Shipment;
 use App\Models\ShipmentDocuments;
 use App\Models\User;
 use App\Traits\HandlesImageUpload;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
-
+use Illuminate\Support\Facades\Gate;
 
 class ShipmentController extends Controller
 {
@@ -48,6 +50,7 @@ class ShipmentController extends Controller
      */
     public function store(NewShipmentRequest $request)
     {
+        Gate::authorize('isAdmin', Shipment::class);
 
         $shipment = Shipment::create($request->validated());
 
@@ -58,7 +61,7 @@ class ShipmentController extends Controller
             'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
         ];
 
-        foreach ($request->file('documents') as $document) {
+        foreach ($request->file('documents', []) as $document) {
             if (str_starts_with($document->getMimeType(), 'image/')) {
 
                 $name = $this->uploadImage($document, "documents/$shipment->id",);
@@ -108,15 +111,19 @@ class ShipmentController extends Controller
      */
     public function edit(Shipment $shipment)
     {
-        //
+
+
+        return view('shipments.edit', compact('shipment'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Shipment $shipment)
+    public function update(UpdateShipmentRequest $request, Shipment $shipment)
     {
-        //
+        $shipment->update($request->validated());
+
+        return redirect('shipments');
     }
 
     /**

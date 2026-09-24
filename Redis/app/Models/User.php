@@ -34,6 +34,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    const ROLE_CLIENT = 'client';
+    const ROLE_ADMIN = 'admin';
+    const ROLE_TRUCKER = 'trucker';
+
+    const ALLOWED_ROLES = [
+        self::ROLE_CLIENT,
+        self::ROLE_ADMIN,
+        self::ROLE_TRUCKER,
+    ];
+
     /**
      * Get the attributes that should be cast.
      *
@@ -45,5 +55,14 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function SetRoleAttributes(string $role)
+    {
+        if (!in_array($role, self::ALLOWED_ROLES)) {
+            throw new \Exception('Invalid role');
+        }
+
+        $this->attributes['role'] = $role;
     }
 }

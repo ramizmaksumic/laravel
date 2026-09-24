@@ -2,11 +2,13 @@
 
 namespace App\Http\Requests;
 
+use App\Models\User;
 use App\Rules\UserClient;
 use App\Rules\UserTrucker;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class NewShipmentRequest extends FormRequest
+class UpdateShipmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -15,8 +17,6 @@ class NewShipmentRequest extends FormRequest
     {
         return true;
     }
-
-
 
     /**
      * Get the validation rules that apply to the request.
@@ -35,10 +35,13 @@ class NewShipmentRequest extends FormRequest
             'status'       => ['required', 'in:pending,in_transit,delivered,cancelled'],
 
             'details'      => ['nullable', 'string'],
-            'documents'    => ['nullable', 'array'],
-            'documents.*' => ['file', 'mimes:pdf,jpg,jpeg,png,doc,docx', 'max:10240'],
-            'user_id' => ['required', new UserTrucker()],
+            'user_id' => [
+                'required',
+                new UserTrucker()
+            ],
+
             'client_id' => ['required', new UserClient()],
+
         ];
     }
 }

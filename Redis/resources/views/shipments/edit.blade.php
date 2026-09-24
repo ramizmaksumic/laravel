@@ -2,17 +2,11 @@
 
 @section('content')
 
-<div class="mt-20">
-    <form action="{{ route('shipments.store') }}" enctype="multipart/form-data" method="POST" class="mx-auto max-w-3xl space-y-6">
-        @csrf
 
-        @if ($errors->any())
-        <div class="bg-red-100 p-4 text-red-700">
-            @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-            @endforeach
-        </div>
-        @endif
+<div class="mt-20">
+    <form action="{{ route('shipments.update', ['shipment' => $shipment->id ]) }}" enctype="multipart/form-data" method="POST" class="mx-auto max-w-3xl space-y-6">
+        @csrf
+        @method('PUT')
 
         <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
             <h2 class="text-xl font-semibold text-gray-900">Create Shipment</h2>
@@ -25,7 +19,7 @@
                     type="text"
                     name="title"
                     id="title"
-                    value="{{ old('title') }}"
+                    value="{{ $shipment->title}}"
                     required
                     class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                            placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
@@ -44,7 +38,7 @@
                         type="text"
                         name="from_city"
                         id="from_city"
-                        value="{{ old('from_city') }}"
+                        value="{{ $shipment->from_city }}"
                         required
                         class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                                placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
@@ -61,7 +55,7 @@
                         type="text"
                         name="from_country"
                         id="from_country"
-                        value="{{ old('from_country') }}"
+                        value="{{ $shipment->from_country }}"
                         required
                         class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                                placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
@@ -78,7 +72,7 @@
                         type="text"
                         name="to_city"
                         id="to_city"
-                        value="{{ old('to_city') }}"
+                        value="{{ $shipment->to_city }}"
                         required
                         class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                                placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
@@ -95,7 +89,7 @@
                         type="text"
                         name="to_country"
                         id="to_country"
-                        value="{{ old('to_country') }}"
+                        value="{{ $shipment->to_country }}"
                         required
                         class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                                placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
@@ -116,7 +110,7 @@
                             type="number"
                             name="price"
                             id="price"
-                            value="{{ old('price') }}"
+                            value="{{ $shipment->price}}"
                             required
                             min="0"
                             step="1"
@@ -142,7 +136,7 @@
                         class="mt-2 block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                                focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
                                @error('status') border-red-500 focus:border-red-500 focus:ring-red-500/20 @enderror">
-                        <option value="">Select status</option>
+                        <option value="{{ $shipment->status }}">Select status</option>
                         <option value="pending" @selected(old('status')==='pending' )>Pending</option>
                         <option value="in_transit" @selected(old('status')==='in_transit' )>In transit</option>
                         <option value="delivered" @selected(old('status')==='delivered' )>Delivered</option>
@@ -153,9 +147,9 @@
                     @enderror
                 </div>
 
-                <!-- Trucker ID -->
+                <!-- TRUCKER ID -->
                 <div class="relative mt-2">
-                    <label for="status" class="block text-sm font-medium text-gray-700">Trucker ID</label>
+                    <label for="status" class="block text-sm font-medium text-gray-700">USER ID</label>
                     <input
                         type="number"
                         name="user_id"
@@ -165,12 +159,8 @@
 
                         class="block w-full rounded-xl border border-gray-300 bg-white px-4 py-3 pr-14 text-gray-900 shadow-sm
                                    placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
-                                   @error('price') border-red-500 focus:border-red-500 focus:ring-red-500/20 @enderror"
-                        placeholder="TRUCKER ID">
-
-                    @error('user_id')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
+                                   @error('trucker_id') border-red-500 focus:border-red-500 focus:ring-red-500/20 @enderror"
+                        placeholder="Trucker ID">
 
                 </div>
 
@@ -194,6 +184,8 @@
                     @enderror
 
                 </div>
+
+
             </div>
 
             {{-- Documents --}}
@@ -225,7 +217,7 @@
                     class="mt-2 block w-full resize-none rounded-xl border border-gray-300 bg-white px-4 py-3 text-gray-900 shadow-sm
                            placeholder:text-gray-400 focus:border-indigo-500 focus:ring-4 focus:ring-indigo-500/20
                            @error('details') border-red-500 focus:border-red-500 focus:ring-red-500/20 @enderror"
-                    placeholder="Dodatne informacije o pošiljci...">{{ old('details') }}</textarea>
+                    placeholder="Dodatne informacije o pošiljci...">{{ $shipment->details}}</textarea>
 
                 @error('details')
                 <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
@@ -245,13 +237,12 @@
                     type="submit"
                     class="inline-flex items-center justify-center rounded-xl bg-indigo-600 px-5 py-3 text-sm font-semibold text-white shadow-sm
                            transition hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-500/30">
-                    Create Shipment
+                    Update Shipment
                 </button>
             </div>
         </div>
     </form>
 
 </div>
-
 
 @endsection
