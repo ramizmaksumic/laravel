@@ -91,9 +91,6 @@ class ShipmentController extends Controller
 
 
 
-
-        Cache::flush();
-
         return redirect()->route('shipments.index')
             ->with('success', 'Shipment created successfully!');
     }
@@ -103,6 +100,8 @@ class ShipmentController extends Controller
      */
     public function show(Shipment $shipment)
     {
+
+        Gate::authorize('view', $shipment);
         return view('shipments.show', compact('shipment'));
     }
 
@@ -111,7 +110,7 @@ class ShipmentController extends Controller
      */
     public function edit(Shipment $shipment)
     {
-
+        Gate::authorize('canViewEdit', $shipment);
 
         return view('shipments.edit', compact('shipment'));
     }
@@ -132,5 +131,19 @@ class ShipmentController extends Controller
     public function destroy(Shipment $shipment)
     {
         //
+    }
+
+    public function assignUser(Request $request, Shipment $shipment)
+    {
+        $request->validate(['user_id' => 'required|exists:users,id']);
+
+
+
+        $shipment->user_id = $request->user_id;
+        $shipment->status = Shipment::STATUS_PENDING;
+
+        Cache::flush();
+        $shipment->save();
+        return redirect()->back()->with('success', 'Uspješno editovano');
     }
 }

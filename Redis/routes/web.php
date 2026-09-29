@@ -23,6 +23,8 @@ Route::get('products/flush/', [ProductController::class, 'flush']);
 
 Route::resource('shipments', ShipmentController::class);
 
+Route::post('/shipments/{shipment}/assignUser', [ShipmentController::class, 'assignUser'])->name('shipment.assignUser');
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

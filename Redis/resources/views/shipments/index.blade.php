@@ -72,10 +72,26 @@
                 </p>
             </div>
             @endif
+
+
             <div class="mt-4 rounded-xl bg-gray-200 p-3 text-sm text-gray-700 text-center font-medium">
                 <a href="{{ route('shipments.show', $shipment) }}">Vidi pošiljku</a>
 
             </div>
+
+            <form action="{{ route('shipment.assignUser', ['shipment' => $shipment->id]) }}" method="POST" class="mt-2">
+                @csrf
+
+                <input type="hidden" value="{{ $shipment->id }}" name="shipment_id">
+                <select name="user_id" id="">
+                    <option selected disabled>None</option>
+                    @foreach (\App\Models\User::all() as $user )
+                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+
+                    @endforeach
+                </select>
+                <button type="submit" class="text-sm font-semibold bg-slate-700 py-2 rounded text-white px-2 mt-2">SAČUVAJ</button>
+            </form>
         </div>
         @endforeach
     </div>
