@@ -28,7 +28,7 @@ class HomeController extends Controller
         });
 
 
-        return view('welcome', compact('products'));
+        return view('layouts.app', compact('products'));
     }
 
     /**

@@ -95,8 +95,10 @@
         </div>
         @endforeach
     </div>
-    <div class="mt-5">
-        {{ $shipments->links() }}
-    </div>
+
+    <livewire:shipments-assigned-list>
+        <div class="mt-5">
+            {{ $shipments->links() }}
+        </div>
 </div>
 @endsection
